@@ -27,9 +27,3 @@ new_object.add_bullet("3")
 
 # Add to my_space
 created_object = my_space.create_object(new_object, note_type)
-# created_object.delete()
-
-
-
-
-

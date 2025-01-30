@@ -11,42 +11,32 @@ pip install git+https://github.com/charlesneimog/anypy
 ## Use 
 
 ``` python
-from anypy import Anytype 
+from anypy import Anytype
 from anypy import Object
 
-# Requires Anytype 0.44.13-beta or higher
-# The first time you log in, you will need to type the 4-digit code that appears in the Anytype app into the terminal.
+# Need Anytype-0.44.13-beta or higher
+# Auth, on first type you need to type the 4 digit code that will popup on Anytype App
 any = Anytype()
 any.auth()
 
 # Get Spaces
 spaces = any.get_spaces()
 my_space = spaces[0]
-found_objects = (my_space.search_object("Math")) 
-# print(found_objects)
 
-# Create Object
+# Create Object on the first space
+note_type = my_space.get_type("Page")
 new_object = Object()
 new_object.name = "Hello World!"
 new_object.icon = "🐍"
 new_object.description = "This is an object created from Python Api"
-
-# Body is a markdown string
-new_object.body = ''' 
-# Hello
-## From 
-### Python 
-
-`code string` 
-**Bold Text**
-_Italic Text_
-
-'''
-
-# Define the type of the object
-page = my_space.get_type("Page")
+new_object.add_title1("Hello")
+new_object.add_title2("From")
+new_object.add_title3("Python")
+new_object.add_codeblock("print('Hello World!')", language="python")
+new_object.add_bullet("1")
+new_object.add_bullet("2")
+new_object.add_bullet("3")
 
 # Add to my_space
-my_space.create_object(new_object, page) 
-
+created_object = my_space.create_object(new_object, note_type)
 ```
