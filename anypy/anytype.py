@@ -2,26 +2,25 @@ import os
 import requests
 import json
 
-from anypy.object import Object
-from anypy.space import Space
-from anypy.relation import Relation
-from anypy.type import Type
+from .space import Space
+from .const import CONST
 
 
 class Anytype:
-    def __init__(self):
-        self.app_name = ''
-        self.space_id = ''
-        self.token = ''
-        self.app_key = ''
-        self.headers = {}
+    def __init__(self) -> None:
+        self.app_name = ""
+        self.space_id = ""
+        self.token = ""
+        self.app_key = ""
+        self._headers = {}
 
-    def auth(self):
+    def auth(self) -> None:
         userdata = self._get_userdata_folder()
         anytoken = os.path.join(userdata, "any_token.json")
         if self.app_name == "":
-            self.app_name = "Python API"
+            self.app_name = CONST.get("apiAppName")
 
+        api_url = CONST.get("apiUrl")
         if os.path.exists(anytoken):
             auth_json = json.load(open(anytoken))
             self.token = auth_json.get("session_token")
@@ -29,14 +28,17 @@ class Anytype:
             if self._validate_token():
                 return
 
-        url = f"http://localhost:31009/v1/auth/display_code?app_name={self.app_name}"
+        url = f"{api_url}/auth/display_code?app_name={self.app_name}"
         response = requests.post(url)
         if response.status_code != 200:
             raise Exception("Error: ", response.json())
 
         api_four_digit_code = input("Enter the 4 digit code: ")
         challenge_id = response.json().get("challenge_id")
-        url = f"http://localhost:31009/v1/auth/token?challenge_id={challenge_id}&code={api_four_digit_code}"
+        url = (
+            f"{api_url}/auth/"
+            + f"token?challenge_id={challenge_id}&code={api_four_digit_code}"
+        )
         response = requests.post(url)
         if response.status_code != 200:
             raise Exception("Error: ", response.json())
@@ -47,38 +49,39 @@ class Anytype:
         self.app_key = response.json().get("app_key")
         self._validate_token()
 
-    def _validate_token(self):
-        url = "http://localhost:31009/v1/spaces?offset=0&limit=500"
-        self.headers = {
+    def _validate_token(self) -> bool:
+        api_url = CONST.get("apiUrl")
+        url = f"{api_url}/spaces"
+        self._headers = {
             "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.app_key}"
+            "Authorization": f"Bearer {self.app_key}",
         }
         try:
-            response = requests.get(url, headers=self.headers)
+            response = requests.get(url, headers=self._headers)
             response.raise_for_status()
             return True
         except requests.exceptions.RequestException as e:
             print(f"Token validation failed: {e}")
             return False
 
-    def _get_userdata_folder(self):
+    def _get_userdata_folder(self) -> str:
         userdata = os.path.join(os.path.expanduser("~"), ".anytype")
         if not os.path.exists(userdata):
             os.makedirs(userdata)
         return userdata
 
-    def get_spaces(self, offset=0, limit=10):
-        api_url = "http://localhost:31009/v1"
+    def get_spaces(self, offset=0, limit=10) -> list[Space]:
+        api_url = CONST.get("apiUrl")
         url = f"{api_url}/spaces/"
         params = {"offset": offset, "limit": limit}
-        response = requests.get(url, headers=self.headers, params=params)
+        response = requests.get(url, headers=self._headers, params=params)
         if response.status_code != 200:
             raise Exception("Error: ", response.json())
 
         results = []
         for data in response.json().get("data", []):
             new_item = Space()
-            new_item._headers = self.headers
+            new_item._headers = self._headers
             for key, value in data.items():
                 if key == "blocks":
                     new_item.__dict__[key] = value

@@ -1,3 +1,4 @@
-from anypy.anytype import Anytype
-from anypy.object import Object
-from anypy.type import Type
+from .anytype import Anytype
+from .object import Object
+from .type import Type
+from .const import CONST
