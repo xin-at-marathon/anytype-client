@@ -23,6 +23,8 @@ new_object.add_codeblock("print('Hello World!')", language="python")
 new_object.add_bullet("1")
 new_object.add_bullet("2")
 new_object.add_bullet("3")
+new_object.add_bullet("3")
+new_object.add_text("$x(n) = x + n$")
 
 
 # Add to my_space
