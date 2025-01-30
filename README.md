@@ -4,7 +4,7 @@ An unnoficial Python Api for [Anytype](https://anytype.io/).
 
 ## Install 
 
-```
+``` bash
 pip install git+https://github.com/charlesneimog/anypy
 ```
 
@@ -14,8 +14,8 @@ pip install git+https://github.com/charlesneimog/anypy
 from anypy import Anytype 
 from anypy import Object
 
-# Need Anytype-0.44.13-beta or higher
-# Auth, on first type you need to type the 4 digit code that will popup on Anytype App
+# Requires Anytype 0.44.13-beta or higher
+# The first time you log in, you will need to type the 4-digit code that appears in the Anytype app into the terminal.
 any = Anytype()
 any.auth()
 

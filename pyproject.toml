@@ -1,0 +1,14 @@
+[project]
+name = "anypy" 
+version = "0.0.1-alpha" 
+description = " An unnoficial Python Client for Anytype."
+
+[project.urls]
+"Source Code" = "https://github.com/charlesneimog/anypy" 
+
+[tool.setuptools]
+packages = ["anypy"]  
+
+[tool.black]
+line-length = 100
+
