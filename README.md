@@ -26,7 +26,6 @@ found_objects = (my_space.search_object("Math"))
 # print(found_objects)
 
 # Create Object
-note_type = my_space.get_type("Page")
 new_object = Object()
 new_object.name = "Hello World!"
 new_object.icon = "🐍"
@@ -44,7 +43,10 @@ _Italic Text_
 
 '''
 
+# Define the type of the object
+page = my_space.get_type("Page")
+
 # Add to my_space
-my_space.create_object(new_object,note_type) 
+my_space.create_object(new_object, page) 
 
 ```
