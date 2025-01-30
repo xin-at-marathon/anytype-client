@@ -2,10 +2,10 @@ import os
 import requests
 import json
 
-from anytype.object import Object
-from anytype.space import Space
-from anytype.relation import Relation 
-from anytype.type import Type 
+from anypy.object import Object
+from anypy.space import Space
+from anypy.relation import Relation 
+from anypy.type import Type 
 
 
 class Anytype:

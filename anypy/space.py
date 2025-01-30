@@ -1,7 +1,7 @@
 import requests
 
-from anytype.type import Type 
-from anytype.object import Object 
+from anypy.type import Type 
+from anypy.object import Object 
 
 class Space:
     def __init__(self):
