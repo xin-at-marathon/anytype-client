@@ -77,12 +77,15 @@ class Space:
 
         obj_clone = deepcopy(obj)
         obj_clone._headers = self._headers
-        obj_clone._space_id = self.id
+        obj_clone.space_id = self.id
         response = requests.post(url, headers=self._headers, json=object_data)
         response.raise_for_status()  
         for key, value in response.json()["object"].items():
             obj_clone.__dict__[key] = value
         return obj_clone
+
+
+
 
     def __repr__(self):
         return f"<Space(name={self.name})>"
