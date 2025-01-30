@@ -9,4 +9,3 @@ class Type:
 
     def __repr__(self):
         return f"<Item(name={self.name}, icon={self.icon})>"
-

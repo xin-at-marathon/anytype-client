@@ -4,4 +4,3 @@ class Block:
 
     def __repr__(self):
         return f"<Block(name={self.name},type_id={self.type})>"
-

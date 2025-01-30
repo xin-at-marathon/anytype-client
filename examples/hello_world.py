@@ -1,4 +1,4 @@
-from anypy import Anytype 
+from anypy import Anytype
 from anypy import Object
 
 # Need Anytype-0.44.13-beta or higher
@@ -9,7 +9,7 @@ any.auth()
 # Get Spaces
 spaces = any.get_spaces()
 my_space = spaces[0]
-found_objects = (my_space.search_object("Math")) 
+found_objects = (my_space.search_object("Math"))
 # print(found_objects)
 
 # Create Object
@@ -32,4 +32,5 @@ _Italic Text_
 '''
 
 # Add to my_space
-my_space.create_object(new_object,note_type)
+created_object = my_space.create_object(new_object, note_type)
+created_object.delete()

@@ -1,11 +1,12 @@
 import requests
+from copy import deepcopy
 
 from anypy.type import Type 
 from anypy.object import Object 
 
 class Space:
     def __init__(self):
-        self.headers = ''
+        self._headers = ''
         self.name = ''
         self.id = ''
         self.all_types = []
@@ -15,7 +16,7 @@ class Space:
         api_url = "http://localhost:31009/v1"
         url = f"{api_url}/spaces/{self.id}/types"
         params = {"offset": offset, "limit": limit}
-        response = requests.get(url, headers=self.headers,params=params)
+        response = requests.get(url, headers=self._headers,params=params)
         if response.status_code != 200:
             raise Exception("Error: ", response.json())
 
@@ -46,17 +47,17 @@ class Space:
         # TODO: Add type filter 
 
         options = {"offset": offset, "limit": limit}
-        response = requests.post(url, json=search_request, headers=self.headers, params=options)
+        response = requests.post(url, json=search_request, headers=self._headers, params=options)
         response_data = response.json()
         results=[]
         for data in response_data.get("data", []):
             new_item = Object()
+            new_item._headers = self._headers
             for key, value in data.items():
                 if key == "blocks":
                     new_item.__dict__[key] = value
                 else: 
                     new_item.__dict__[key] = value
-
             results.append(new_item)
 
         return results
@@ -73,10 +74,15 @@ class Space:
             "template_id": "",
             "object_type_unique_key": type.unique_key,
         }
-        response = requests.post(url, headers=self.headers, json=object_data)
+
+        obj_clone = deepcopy(obj)
+        obj_clone._headers = self._headers
+        obj_clone._space_id = self.id
+        response = requests.post(url, headers=self._headers, json=object_data)
         response.raise_for_status()  
-
-
+        for key, value in response.json()["object"].items():
+            obj_clone.__dict__[key] = value
+        return obj_clone
 
     def __repr__(self):
         return f"<Space(name={self.name})>"

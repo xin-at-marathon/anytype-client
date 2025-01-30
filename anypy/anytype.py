@@ -4,14 +4,14 @@ import json
 
 from anypy.object import Object
 from anypy.space import Space
-from anypy.relation import Relation 
-from anypy.type import Type 
+from anypy.relation import Relation
+from anypy.type import Type
 
 
 class Anytype:
     def __init__(self):
-        self.app_name ='' 
-        self.space_id ='' 
+        self.app_name = ''
+        self.space_id = ''
         self.token = ''
         self.app_key = ''
         self.headers = {}
@@ -71,22 +71,19 @@ class Anytype:
         api_url = "http://localhost:31009/v1"
         url = f"{api_url}/spaces/"
         params = {"offset": offset, "limit": limit}
-        response = requests.get(url, headers=self.headers,params=params)
+        response = requests.get(url, headers=self.headers, params=params)
         if response.status_code != 200:
             raise Exception("Error: ", response.json())
 
         results = []
         for data in response.json().get("data", []):
             new_item = Space()
-            new_item.headers = self.headers
+            new_item._headers = self.headers
             for key, value in data.items():
                 if key == "blocks":
                     new_item.__dict__[key] = value
-                else: 
+                else:
                     new_item.__dict__[key] = value
             results.append(new_item)
-            
-        return results 
 
-
-
+        return results
