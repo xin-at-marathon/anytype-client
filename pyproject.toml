@@ -1,13 +1,13 @@
 [project]
-name = "anypy" 
+name = "anytype-client" 
 version = "0.0.1-alpha.4"
 description = " An unnoficial Python Client for Anytype."
 
 [project.urls]
-"Source Code" = "https://github.com/charlesneimog/anypy" 
+"Source Code" = "https://github.com/charlesneimog/anytype-client" 
 
 [tool.setuptools]
-packages = ["anypy"]  
+packages = ["anytype"]  
 
 [tool.black]
 line-length = 80

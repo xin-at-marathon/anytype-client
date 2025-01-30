@@ -1,18 +1,18 @@
 # anypy
 
-An unnoficial Python Api for [Anytype](https://anytype.io/).
+An unnoficial Python Client for [Anytype](https://anytype.io/).
 
 ## Install 
 
 ``` bash
-pip install git+https://github.com/charlesneimog/anypy
+pip install git+https://github.com/charlesneimog/anytype-client
 ```
 
 ## Use 
 
 ``` python
-from anypy import Anytype
-from anypy import Object
+from anytype import Anytype
+from anytype import Object
 
 # Need Anytype-0.44.13-beta or higher
 # Auth, on first type you need to type the 4 digit code that will popup on Anytype App
