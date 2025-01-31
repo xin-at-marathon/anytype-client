@@ -1,6 +1,7 @@
 import os
 import requests
 import json
+import plataform
 
 from .space import Space
 from .const import CONST
@@ -35,11 +36,12 @@ class Anytype:
 
         api_four_digit_code = input("Enter the 4 digit code: ")
         challenge_id = response.json().get("challenge_id")
-        url = (
-            f"{api_url}/auth/"
-            + f"token?challenge_id={challenge_id}&code={api_four_digit_code}"
-        )
-        response = requests.post(url)
+        parameters = {
+            "challenge_id": challenge_id,
+            "code": api_four_digit_code,
+        }
+        url = f"{api_url}/auth/token"
+        response = requests.post(url, json=parameters)
         if response.status_code != 200:
             raise Exception("Error: ", response.json())
 
@@ -68,6 +70,10 @@ class Anytype:
         userdata = os.path.join(os.path.expanduser("~"), ".anytype")
         if not os.path.exists(userdata):
             os.makedirs(userdata)
+
+        if plataform.system() == "Windows":
+            os.system(f"attrib +h {userdata}")
+
         return userdata
 
     def get_spaces(self, offset=0, limit=10) -> list[Space]:
