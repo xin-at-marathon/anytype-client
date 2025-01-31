@@ -90,3 +90,28 @@ class Anytype:
             results.append(new_item)
 
         return results
+    
+    def create_space(self, name: str) -> Space:
+        api_url = CONST.get("apiUrl")
+        url = f"{api_url}/spaces/"
+        object_data = {
+            "name": name,
+        }
+
+        response = requests.post(url, headers=self._headers, json=object_data)
+        response.raise_for_status()
+
+        data = response.json()
+        new_space = Space()
+        for key, value in data["space"].items():
+            new_space._headers = self._headers
+            new_space.__dict__[key] = value
+
+        return new_space
+
+
+
+
+
+    
+
