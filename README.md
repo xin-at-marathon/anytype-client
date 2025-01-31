@@ -1,4 +1,4 @@
-# anypy
+# Anytype Python Client
 
 An unnoficial Python Client for [Anytype](https://anytype.io/).
 
@@ -29,13 +29,7 @@ new_object = Object()
 new_object.name = "Hello World!"
 new_object.icon = "🐍"
 new_object.description = "This is an object created from Python Api"
-new_object.add_title1("Hello")
-new_object.add_title2("From")
-new_object.add_title3("Python")
-new_object.add_codeblock("print('Hello World!')", language="python")
-new_object.add_bullet("1")
-new_object.add_bullet("2")
-new_object.add_bullet("3")
+new_object.add_title1("Hello From Python")
 
 # Add to my_space
 created_object = my_space.create_object(new_object, note_type)
