@@ -2,7 +2,7 @@ import requests
 from pathlib import Path
 import platform
 
-from .const import CONST
+from .config import API_CONFIG
 
 
 class Object:
@@ -27,7 +27,7 @@ class Object:
         return f"<Object(name={self.name},type_id={self.type})>"
 
     def delete(self) -> None:
-        url = f"{CONST["apiUrl"]}/spaces/{self.space_id}/objects/{self.id}"
+        url = f"{API_CONFIG["apiUrl"]}/spaces/{self.space_id}/objects/{self.id}"
         response = requests.delete(url, headers=self._headers)
         response.raise_for_status()
 
@@ -37,7 +37,7 @@ class Object:
             path = Path.cwd() / path
 
         assert format in ["markdown", "protobuf"]
-        url = f"{CONST["apiUrl"]}/spaces/{self.space_id}/objects/{self.id}/export/{format}"
+        url = f"{API_CONFIG["apiUrl"]}/spaces/{self.space_id}/objects/{self.id}/export/{format}"
         payload = {"path": str(path)}
         response = requests.post(url, headers=self._headers, json=payload)
         response.raise_for_status()

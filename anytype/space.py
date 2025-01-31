@@ -4,7 +4,7 @@ from copy import deepcopy
 from .type import Type
 from .object import Object
 from .template import Template
-from .const import CONST
+from .config import API_CONFIG
 
 
 class Space:
@@ -15,7 +15,7 @@ class Space:
         self.all_types = []
 
     def get_object(self, objectId: str, offset=0, limit=100) -> Object:
-        anyUrl = CONST["apiUrl"]
+        anyUrl = API_CONFIG["apiUrl"]
         url = f"{anyUrl}/spaces/{self.id}/objects/{objectId}"
         params = {"offset": offset, "limit": limit}
         response = requests.get(url, headers=self._headers, params=params)
@@ -30,7 +30,7 @@ class Space:
         return obj
 
     def get_objects(self, offset=0, limit=100) -> list[Object]:
-        url = f"{CONST["apiUrl"]}/spaces/{self.id}/objects/"
+        url = f"{API_CONFIG["apiUrl"]}/spaces/{self.id}/objects/"
         params = {"offset": offset, "limit": limit}
         response = requests.get(url, headers=self._headers, params=params)
         response.raise_for_status()
@@ -49,7 +49,7 @@ class Space:
         return results
 
     def get_types(self, offset=0, limit=100) -> list[Type]:
-        url = f"{CONST["apiUrl"]}/spaces/{self.id}/types"
+        url = f"{API_CONFIG["apiUrl"]}/spaces/{self.id}/types"
         params = {"offset": offset, "limit": limit}
         response = requests.get(url, headers=self._headers, params=params)
         response.raise_for_status()
@@ -75,7 +75,7 @@ class Space:
         raise Exception("Type not found")
 
     def get_templates(self, type: Type, offset=0, limit=100) -> list[Template]:
-        apiUrl = CONST.get("apiUrl")
+        apiUrl = API_CONFIG.get("apiUrl")
         url = f"{apiUrl}/spaces/{self.id}/types/{type.id}/templates"
         params = {"offset": offset, "limit": limit}
         response = requests.get(url, headers=self._headers, params=params)
@@ -96,7 +96,7 @@ class Space:
     def search(self, query, types=None, offset=0, limit=10) -> list[Object]:
         if self.id == "":
             raise Exception("Space ID is required")
-        url = f"{CONST.get("apiUrl")}/spaces/{self.id}/search"
+        url = f"{API_CONFIG.get("apiUrl")}/spaces/{self.id}/search"
         search_request = {
             "query": query,
         }
@@ -123,7 +123,7 @@ class Space:
         return results
 
     def global_search(self, query, offset=0, limit=10) -> list[Object]:
-        url = f"{CONST.get("apiUrl")}/search"
+        url = f"{API_CONFIG.get("apiUrl")}/search"
         options = {"offset": offset, "limit": limit}
         search_request = {
             "query": query,
@@ -149,7 +149,7 @@ class Space:
         return results
 
     def create_object(self, obj: Object, type: Type) -> Object:
-        url = f"{CONST["apiUrl"]}/spaces/{self.id}/objects"
+        url = f"{API_CONFIG["apiUrl"]}/spaces/{self.id}/objects"
         object_data = {
             "icon": obj.icon,
             "name": obj.name,

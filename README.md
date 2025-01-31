@@ -74,7 +74,7 @@ print(f"Created object: {created_object.id}")
 
 ## 🤝 Contributing
 
-We welcome contributions! Here's how to help:
+Contributions are welcomed! Here's how to help:
 
 1. Report bugs or request features via Issues
 2. Submit pull requests for improvements
@@ -82,5 +82,5 @@ We welcome contributions! Here's how to help:
 
 ## 📄 License
 
-MIT License - see LICENSE for details.
+GPL-3.0 License - see LICENSE for details.
 

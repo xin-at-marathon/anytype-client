@@ -3,7 +3,7 @@ import requests
 import json
 
 from .space import Space
-from .const import CONST
+from .config import API_CONFIG
 
 
 class Anytype:
@@ -27,7 +27,7 @@ class Anytype:
             if self._validate_token():
                 return
 
-        api_url = CONST.get("apiUrl")
+        api_url = API_CONFIG.get("apiUrl")
         url = f"{api_url}/auth/display_code"
         payload = {
             "app_name": self.app_name
@@ -52,7 +52,7 @@ class Anytype:
         self._validate_token()
 
     def _validate_token(self) -> bool:
-        api_url = CONST.get("apiUrl")
+        api_url = API_CONFIG.get("apiUrl")
         url = f"{api_url}/spaces"
         self._headers = {
             "Content-Type": "application/json",
@@ -77,7 +77,7 @@ class Anytype:
         return userdata
 
     def get_spaces(self, offset=0, limit=10) -> list[Space]:
-        api_url = CONST.get("apiUrl")
+        api_url = API_CONFIG.get("apiUrl")
         url = f"{api_url}/spaces/"
         params = {"offset": offset, "limit": limit}
         response = requests.get(url, headers=self._headers, params=params)
@@ -96,7 +96,7 @@ class Anytype:
         return results
 
     def create_space(self, name: str) -> Space:
-        api_url = CONST.get("apiUrl")
+        api_url = API_CONFIG.get("apiUrl")
         url = f"{api_url}/spaces/"
         object_data = {
             "name": name,
