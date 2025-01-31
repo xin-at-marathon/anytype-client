@@ -90,7 +90,7 @@ class Anytype:
             results.append(new_item)
 
         return results
-    
+
     def create_space(self, name: str) -> Space:
         api_url = CONST.get("apiUrl")
         url = f"{api_url}/spaces/"
@@ -108,10 +108,3 @@ class Anytype:
             new_space.__dict__[key] = value
 
         return new_space
-
-
-
-
-
-    
-
