@@ -1,0 +1,2 @@
+pdfannots
+git+https://github.com/charlesneimog/anytype-client
