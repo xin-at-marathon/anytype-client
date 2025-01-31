@@ -15,7 +15,7 @@ from anytype import Anytype
 from anytype import Object
 
 # Need Anytype-0.44.13-beta or higher
-# Auth, on first type you need to type the 4 digit code that will popup on Anytype App
+# Auth, the first time, you need to type the 4-digit code that will pop up on Anytype App on the terminal
 any = Anytype()
 any.auth()
 
