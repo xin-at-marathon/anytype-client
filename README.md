@@ -1,36 +1,86 @@
-# Anytype Python Client
+# 🐍 Anytype Python Client 
 
-Python Client for [Anytype](https://anytype.io/).
+[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/charlesneimog/anytype-client/blob/main/LICENSE)
 
-## Install 
+A Python client for interacting with [Anytype](https://anytype.io/). Automate workflows and integrate with your apps! ✨
 
-``` bash
+---
+
+## 🚀 Features
+
+- **Seamless Integration**: Connect Python scripts directly to your Anytype workspace.
+- **Object Management**: Create, modify, and organize pages, notes, and custom objects.
+- **Space Operations**: Manage spaces, types, and relations programmatically.
+- **Batch Operations**: Export data, automate repetitive tasks, and more.
+- **PDF Import Example**: Bulk import annotated PDFs as structured notes (see [examples](https://github.com/charlesneimog/anytype-client/tree/main/examples)).
+
+---
+
+## 📦 Installation
+
+```bash
 pip install git+https://github.com/charlesneimog/anytype-client
-```
+``` 
 
-## Use 
+### Prerequisites:
+
+- Python 3.8+
+- Anytype desktop app (v0.44.13-beta or higher) running during authentication
+
+## ⚡ Quick Start
+
+1. Authentication
 
 ``` python
 from anytype import Anytype
+
+# Initialize client (first run triggers authentication)
+any = Anytype()
+any.auth()  # 🔑 Enter 4-digit code from Anytype app when prompted
+``` 
+2. Create Your First Object
+
+``` python
 from anytype import Object
 
-# Need Anytype-0.44.13-beta or higher
-# Auth, the first time, you need to type the 4-digit code that will pop up on Anytype App on the terminal
-any = Anytype()
-any.auth()
-
-# Get Spaces
+# Get your workspace
 spaces = any.get_spaces()
-my_space = spaces[0]
+my_space = spaces[0]  # Use your preferred space
 
-# Create Object on the first space
+# Create a new page
 note_type = my_space.get_type("Page")
-new_object = Object()
-new_object.name = "Hello World!"
-new_object.icon = "🐍"
-new_object.description = "This is an object created from Python Api"
-new_object.add_title1("Hello From Python")
+new_note = Object()
+new_note.name = "My Python-Powered Note 📝"
+new_note.icon = "🔥"
+new_note.description = "Automatically generated via Python API"
 
-# Add to my_space
-created_object = my_space.create_object(new_object, note_type)
+# Add rich content
+new_note.add_title1("Welcome to Automated Knowledge Management!")
+new_note.add_text("This section was created programmatically using:")
+
+# Commit to workspace
+created_object = my_space.create_object(new_note, note_type)
+print(f"Created object: {created_object.id}")
 ```
+## 🌟 Examples
+
+| Example | Description |
+|---------|-------------|
+| [📄 Hello World](examples/hello_world.py) | Create a basic note with formatted text |
+| [📚 PDF Notes Importer](examples/import-pdf-notes.py) | Batch import annotated PDFs |
+| *More examples coming as Anytype API evolves* | [Request a feature](https://github.com/charlesneimog/anytype-client/issues) |
+
+
+## 🤝 Contributing
+
+We welcome contributions! Here's how to help:
+
+1. Report bugs or request features via Issues
+2. Submit pull requests for improvements
+3. Share your use cases in Discussions
+
+## 📄 License
+
+MIT License - see LICENSE for details.
+
