@@ -1,6 +1,6 @@
 # Anytype Python Client
 
-An unnoficial Python Client for [Anytype](https://anytype.io/).
+Python Client for [Anytype](https://anytype.io/).
 
 ## Install 
 
