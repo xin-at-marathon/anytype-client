@@ -14,13 +14,12 @@ class Anytype:
         self.app_key = ""
         self._headers = {}
 
-    def auth(self) -> None:
+    def auth(self):
         userdata = self._get_userdata_folder()
         anytoken = os.path.join(userdata, "any_token.json")
         if self.app_name == "":
-            self.app_name = CONST.get("apiAppName")
+            self.app_name = "Python API"
 
-        api_url = CONST.get("apiUrl")
         if os.path.exists(anytoken):
             auth_json = json.load(open(anytoken))
             self.token = auth_json.get("session_token")
@@ -28,19 +27,25 @@ class Anytype:
             if self._validate_token():
                 return
 
-        url = f"{api_url}/auth/display_code?app_name={self.app_name}"
+        api_url = CONST.get("apiUrl")
+        url = f"{api_url}/auth/display_code"
+        payload = {
+            "app_name": self.app_name
+        }
+        response = requests.post(url, json=payload)
+
         response = requests.post(url)
         if response.status_code != 200:
             raise Exception("Error: ", response.json())
 
         api_four_digit_code = input("Enter the 4 digit code: ")
         challenge_id = response.json().get("challenge_id")
-        parameters = {
-            "challenge_id": challenge_id,
-            "code": api_four_digit_code,
-        }
         url = f"{api_url}/auth/token"
-        response = requests.post(url, json=parameters)
+        payload = {
+            "challenge_id": challenge_id,
+            "code": api_four_digit_code
+        }
+        response = requests.post(url, json=payload)
         if response.status_code != 200:
             raise Exception("Error: ", response.json())
 
