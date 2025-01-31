@@ -1,5 +1,6 @@
 import requests
 from pathlib import Path
+import platform
 
 from .const import CONST
 
@@ -37,9 +38,11 @@ class Object:
 
         assert format in ["markdown", "protobuf"]
         url = f"{CONST["apiUrl"]}/spaces/{self.space_id}/objects/{self.id}/export/{format}"
-        object_data = {"path": str(path)}
-        response = requests.post(url, headers=self._headers, json=object_data)
+        payload = {"path": str(path)}
+        response = requests.post(url, headers=self._headers, json=payload)
         response.raise_for_status()
+        if platform.system() == "Linux":
+            print("Note that this will not work on Anytype for flatpak")
 
     def add_title1(self, text) -> None:
         self.body += f"# {text}\n"
