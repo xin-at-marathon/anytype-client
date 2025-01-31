@@ -33,10 +33,7 @@ class Anytype:
             "app_name": self.app_name
         }
         response = requests.post(url, json=payload)
-
-        response = requests.post(url)
-        if response.status_code != 200:
-            raise Exception("Error: ", response.json())
+        response.raise_for_status()
 
         api_four_digit_code = input("Enter the 4 digit code: ")
         challenge_id = response.json().get("challenge_id")
@@ -46,8 +43,7 @@ class Anytype:
             "code": api_four_digit_code
         }
         response = requests.post(url, json=payload)
-        if response.status_code != 200:
-            raise Exception("Error: ", response.json())
+        response.raise_for_status()
 
         with open(anytoken, "w") as file:
             json.dump(response.json(), file, indent=4)
@@ -85,9 +81,7 @@ class Anytype:
         url = f"{api_url}/spaces/"
         params = {"offset": offset, "limit": limit}
         response = requests.get(url, headers=self._headers, params=params)
-        if response.status_code != 200:
-            raise Exception("Error: ", response.json())
-
+        response.raise_for_status()
         results = []
         for data in response.json().get("data", []):
             new_item = Space()
