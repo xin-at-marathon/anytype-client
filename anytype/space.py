@@ -30,7 +30,7 @@ class Space:
         return obj
 
     def get_objects(self, offset=0, limit=100) -> list[Object]:
-        url = f"{CONST["apiUrl"]}/spaces/{self.id}/"
+        url = f"{CONST["apiUrl"]}/spaces/{self.id}/objects/"
         params = {"offset": offset, "limit": limit}
         response = requests.get(url, headers=self._headers, params=params)
         response.raise_for_status()
@@ -38,7 +38,7 @@ class Space:
         results = []
         for data in response_data.get("data", []):
             new_item = Object()
-            self._headers = self._headers
+            new_item._headers = self._headers
             for key, value in data.items():
                 if key == "blocks":
                     new_item.__dict__[key] = value
