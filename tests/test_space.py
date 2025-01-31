@@ -1,27 +1,29 @@
 import anytype
 from anytype import Anytype
+from pathlib import Path
 
 any = Anytype()
 any.auth()
 
 
-def get_apispace() -> anytype.Space:
+def get_apispace() -> anytype.Space | None:
     spaces = any.get_spaces()
     for space in spaces:
         if space.name == "API":
             return space
-    raise Exception("Space not found")
+    return None
 
 
 def test_create_space():
-    space = any.create_space("API")
-    print(space)
+    if get_apispace():
+        return
+    any.create_space("API")
+    assert get_apispace()
 
 
 def test_get_spaces():
     spaces = any.get_spaces()
     assert len(spaces) > 0
-
     found_space = False
     for space in spaces:
         if space.name == "API":
@@ -48,5 +50,8 @@ def test_exportobj():
     space = get_apispace()
     if not space:
         raise Exception("Space not found")
-    obj = space.get_objects()[0]
-    obj.export("test.md", "md")
+    objs = space.get_objects()
+    obj = objs[0]
+    assert len(objs) > 0
+    obj.export("export")
+    assert Path("export").exists()
