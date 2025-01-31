@@ -1,4 +1,5 @@
 import requests
+from pathlib import Path
 
 from .const import CONST
 
@@ -27,6 +28,17 @@ class Object:
     def delete(self) -> None:
         url = f"{CONST["apiUrl"]}/spaces/{self.space_id}/objects/{self.id}"
         response = requests.delete(url, headers=self._headers)
+        response.raise_for_status()
+
+    def export(self, folder: str, format: str = "markdown") -> None:
+        path = Path(folder)
+        if not path.is_absolute():
+            path = Path.cwd() / path
+
+        assert format in ["markdown", "protobuf"]
+        url = f"{CONST["apiUrl"]}/spaces/{self.space_id}/objects/{self.id}/export/{format}"
+        object_data = {"path": str(path)}
+        response = requests.post(url, headers=self._headers, json=object_data)
         response.raise_for_status()
 
     def add_title1(self, text) -> None:
