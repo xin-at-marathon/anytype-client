@@ -1,7 +1,6 @@
 import os
 import requests
 import json
-import plataform
 
 from .space import Space
 from .const import CONST
@@ -71,7 +70,7 @@ class Anytype:
         if not os.path.exists(userdata):
             os.makedirs(userdata)
 
-        if plataform.system() == "Windows":
+        if os.name == "nt":
             os.system(f"attrib +h {userdata}")
 
         return userdata
