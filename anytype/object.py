@@ -2,7 +2,7 @@ import requests
 from pathlib import Path
 import platform
 
-from .config import END_POINT
+from .config import END_POINTS
 from .block import Block
 
 
@@ -27,18 +27,13 @@ class Object:
     def __repr__(self):
         return f"<Object(name={self.name},type_id={self.type})>"
 
-    def delete(self) -> None:
-        url = END_POINT["deleteObject"].format(self.space_id, self.id)
-        response = requests.delete(url, headers=self._headers)
-        response.raise_for_status()
-
     def export(self, folder: str, format: str = "markdown") -> None:
         path = Path(folder)
         if not path.is_absolute():
             path = Path.cwd() / path
 
         assert format in ["markdown", "protobuf"]
-        url = END_POINT["getExport"].format(self.space_id, self.id, format)
+        url = END_POINTS["getExport"].format(self.space_id, self.id, format)
         payload = {"path": str(path)}
         response = requests.post(url, headers=self._headers, json=payload)
         response.raise_for_status()

@@ -1,5 +1,6 @@
 class Template:
     def __init__(self):
+        self._headers: dict = {}
         self.type = ""
         self.id = ""
         self.name = ""

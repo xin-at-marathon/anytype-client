@@ -3,10 +3,11 @@ API_CONFIG = {
     "apiAppName": "PythonClient",
 }
 
-END_POINT = {
+END_POINTS = {
     "auth": "{}/auth/token".format(API_CONFIG["apiUrl"]),
     "createObject": "{}/spaces/{}/objects".format(API_CONFIG["apiUrl"], "{}"),
     "createSpace": "{}/spaces".format(API_CONFIG["apiUrl"]),
+    "deleteSpace": "{}/spaces/{}".format(API_CONFIG["apiUrl"], "{}"),
     "deleteObject": "{}/spaces/{}/objects/{}".format(
         API_CONFIG["apiUrl"], "{}", "{}"
     ),
@@ -25,8 +26,10 @@ END_POINT = {
         "{}",
     ),
     "getSpaces": "{}/spaces".format(API_CONFIG["apiUrl"]),
-    "getTemplates": "{}/spaces/{}/types/{}/templates{}".format(
-        API_CONFIG["apiUrl"], "{}", "{}", "{}"
+    "getTemplates": "{}/spaces/{}/types/{}/templates".format(
+        API_CONFIG["apiUrl"],
+        "{}",
+        "{}",
     ),
     "getToken": "{}/auth/token".format(
         API_CONFIG["apiUrl"],
