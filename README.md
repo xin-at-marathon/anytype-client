@@ -1,7 +1,7 @@
-# 🐍 Anytype Python Client 
+# Anytype Python Client 
 
-[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
-[![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/charlesneimog/anytype-client/blob/main/LICENSE)
+[![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-GPL3-green)](https://github.com/charlesneimog/anytype-client/blob/main/LICENSE)
 
 A Python client for interacting with [Anytype](https://anytype.io/). Automate workflows and integrate with your apps! ✨
 
