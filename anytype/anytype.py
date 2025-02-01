@@ -3,7 +3,7 @@ import requests
 import json
 
 from .space import Space
-from .config import API_CONFIG
+from .config import END_POINT
 
 
 class Anytype:
@@ -17,9 +17,7 @@ class Anytype:
     def auth(self):
         userdata = self._get_userdata_folder()
         anytoken = os.path.join(userdata, "any_token.json")
-        if self.app_name == "":
-            self.app_name = "Python API"
-
+        if self.app_name == "": self.app_name = "Python API"
         if os.path.exists(anytoken):
             auth_json = json.load(open(anytoken))
             self.token = auth_json.get("session_token")
@@ -27,22 +25,16 @@ class Anytype:
             if self._validate_token():
                 return
 
-        api_url = API_CONFIG.get("apiUrl")
-        url = f"{api_url}/auth/display_code"
-        payload = {
-            "app_name": self.app_name
-        }
-        response = requests.post(url, json=payload)
+        url = END_POINT["displayCode"]
+        payload = {"app_name": self.app_name}
+        response = requests.post(url, params=payload)
         response.raise_for_status()
 
         api_four_digit_code = input("Enter the 4 digit code: ")
         challenge_id = response.json().get("challenge_id")
-        url = f"{api_url}/auth/token"
-        payload = {
-            "challenge_id": challenge_id,
-            "code": api_four_digit_code
-        }
-        response = requests.post(url, json=payload)
+        url = END_POINT["auth"]
+        payload = {"challenge_id": challenge_id, "code": api_four_digit_code}
+        response = requests.post(url, params=payload)
         response.raise_for_status()
 
         with open(anytoken, "w") as file:
@@ -52,8 +44,7 @@ class Anytype:
         self._validate_token()
 
     def _validate_token(self) -> bool:
-        api_url = API_CONFIG.get("apiUrl")
-        url = f"{api_url}/spaces"
+        url = END_POINT["getSpaces"]
         self._headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self.app_key}",
@@ -77,8 +68,7 @@ class Anytype:
         return userdata
 
     def get_spaces(self, offset=0, limit=10) -> list[Space]:
-        api_url = API_CONFIG.get("apiUrl")
-        url = f"{api_url}/spaces/"
+        url = END_POINT["getSpaces"]
         params = {"offset": offset, "limit": limit}
         response = requests.get(url, headers=self._headers, params=params)
         response.raise_for_status()
@@ -97,14 +87,12 @@ class Anytype:
 
     def create_space(self, name: str) -> Space:
         api_url = API_CONFIG.get("apiUrl")
-        url = f"{api_url}/spaces/"
+        url = f"{api_url}{END_POINT.get('spaces')}"
         object_data = {
             "name": name,
         }
-
         response = requests.post(url, headers=self._headers, json=object_data)
         response.raise_for_status()
-
         data = response.json()
         new_space = Space()
         for key, value in data["space"].items():

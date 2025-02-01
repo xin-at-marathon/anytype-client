@@ -2,32 +2,33 @@ import requests
 from pathlib import Path
 import platform
 
-from .config import API_CONFIG
+from .config import END_POINT
+from .block import Block
 
 
 class Object:
     def __init__(self):
-        self._headers = {}
-        self.space_id = ""
-        self.id = id
-        self.source = ""
-        self.type = "Page"
-        self.name = ""
-        self.icon = ""
-        self.body = ""
-        self.description = ""
-        self.blocks = []
+        self._headers: dict = {}
+        self.space_id: str = ""
+        self.id: str = ""
+        self.source: str = ""
+        self.type: str = "Page"
+        self.name: str = ""
+        self.icon: str = ""
+        self.body: str = ""
+        self.description: str = ""
+        self.blocks: list[Block] = []
         self.details = []
-        self.layout = "basic"
-        self.root_id = ""
-        self.snippet = ""
-        self.space_id = ""
+        self.layout: str = "basic"
+        self.root_id: str = ""
+        self.snippet: str = ""
+        self.space_id: str = ""
 
     def __repr__(self):
         return f"<Object(name={self.name},type_id={self.type})>"
 
     def delete(self) -> None:
-        url = f"{API_CONFIG["apiUrl"]}/spaces/{self.space_id}/objects/{self.id}"
+        url = END_POINT["deleteObject"].format(self.space_id, self.id)
         response = requests.delete(url, headers=self._headers)
         response.raise_for_status()
 
@@ -37,7 +38,7 @@ class Object:
             path = Path.cwd() / path
 
         assert format in ["markdown", "protobuf"]
-        url = f"{API_CONFIG["apiUrl"]}/spaces/{self.space_id}/objects/{self.id}/export/{format}"
+        url = END_POINT["getExport"].format(self.space_id, self.id, format)
         payload = {"path": str(path)}
         response = requests.post(url, headers=self._headers, json=payload)
         response.raise_for_status()
