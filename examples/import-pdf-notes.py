@@ -11,6 +11,7 @@ any = Anytype()
 any.auth()
 
 spaces = any.get_spaces()
+pdf_space = None
 found = False
 for space in spaces:
     if space.name == "API":
@@ -21,7 +22,7 @@ if not found:
     pdf_space = any.create_space("API")
 
 
-# After you are safe, add this to your main space
+# After you are safe, add this to your main space (in my Anytype, my docs, and notes are the space[0])
 pdf_space = spaces[0]
 
 all_notes = []
@@ -50,15 +51,21 @@ for page in doc.pages:
             result["text"] = result["text"].replace("\n", " ")
         all_notes.append(result)
 
+if pdf_space is None:
+    raise ValueError("Space not found")
 
-note_type = pdf_space.get_type("Page")
+# <- Not sure if this exists for you too
+note_type = pdf_space.get_type("Article")
+
+# <- this is valid just for my workspace
+note_type.set_template("Article")
+
 new_object = Object()
 new_object.name = pdf_name
-new_object.icon = "🐍"
+new_object.icon = "📄"
 new_object.description = "This is an object created from Python Api"
 
 for note in all_notes:
     new_object.body += f"> {note['text']} \n\n"
-
 
 created_object = pdf_space.create_object(new_object, note_type)
