@@ -35,6 +35,6 @@ END_POINTS = {
         API_CONFIG["apiUrl"],
     ),
     "getTypes": "{}/spaces/{}/types".format(API_CONFIG["apiUrl"], "{}"),
-    "globalSearch": "{}/search{}".format(API_CONFIG["apiUrl"], "{}"),
-    "search": "{}/spaces/{}/search{}".format(API_CONFIG["apiUrl"], "{}", "{}"),
+    "globalSearch": "{}/search".format(API_CONFIG["apiUrl"]),
+    "search": "{}/spaces/{}/search".format(API_CONFIG["apiUrl"], "{}"),
 }

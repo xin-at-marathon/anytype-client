@@ -41,7 +41,31 @@ def test_template():
     print(template)
 
 
-def test_releation():
+def test_search():
+    space = get_apispace()
+    values = space.search("Math")
+    print(values)
+
+
+def test_globalsearch():
+    space = get_apispace()
+    query = space.global_search("Isso não deve existir")
+    print(query)
+
+    space = get_apispace()
+    query = space.global_search("Math")
+    print(query)
+
+
+def test_get_types():
+    space = get_apispace()
+    space._all_types = []
+
+    with pytest.raises(ValueError):
+        space.get_type("ExistingType")
+
+
+def test_relation():
     # this is unsued yet, but just to keep testing
     relation = anytype.Relation()
     print(relation)
@@ -60,6 +84,25 @@ def test_spacemethods():
     obj = space.get_object(obj.id)
 
 
+def test_templates():
+    space = get_apispace()
+    objtype = space.get_type("Project")
+    print(objtype)
+
+    templates = objtype.get_templates()
+    if templates is None:
+        raise Exception("No templates found for Project")
+
+    objtype.set_template(templates[0].name)
+    objtype._all_templates = []
+    objtype.set_template(templates[0].name)
+    print(templates[0])
+
+    # template that does not exist
+    with pytest.raises(ValueError):
+        objtype.set_template("NoExists")
+
+
 def test_createobj():
     space = get_apispace()
     if not space:
@@ -70,8 +113,8 @@ def test_createobj():
     obj.icon = "🐍"
     obj.body = "`print('Hello World!')`"
     obj.description = "This is an object created from Python Api"
-    objtype = space.get_type("Page")
 
+    objtype = space.get_type("Page")
     created_obj = space.create_object(obj, objtype)
 
     # Add assertions to verify the object was created
@@ -87,8 +130,6 @@ def test_createobj():
     created_obj.add_codeblock("print('Hello World!')")
     created_obj.add_bullet("Hello World!")
     created_obj.add_checkbox("Hello World!")
-
-    created_obj.delete()
 
 
 def test_exportobj():

@@ -16,21 +16,25 @@ class Type:
         self.unique_key = ""
         self.template_id = ""
 
-    def get_templates(self, offset: int = 0, limit: int = 100) -> None:
+    def get_templates(
+        self, offset: int = 0, limit: int = 100
+    ) -> list[Template]:
         url = END_POINTS["getTemplates"].format(self.space_id, self.id)
         params = {"offset": offset, "limit": limit}
         response = requests.get(url, headers=self._headers, params=params)
         response.raise_for_status()
         response_data = response.json()
+        self._all_templates = []
         for data in response_data.get("data", []):
             new_template = Template()
             new_template._headers = self._headers
             for key, value in data.items():
                 new_template.__dict__[key] = value
                 self._all_templates.append(new_template)
+        return self._all_templates
 
     def set_template(self, template_name: str) -> None:
-        if not self._all_templates:
+        if len(self._all_templates) == 0:
             self.get_templates()
 
         found = False

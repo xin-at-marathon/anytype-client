@@ -12,7 +12,7 @@ class Space:
         self._headers = {}
         self.name = ""
         self.id = ""
-        self.all_types = []
+        self._all_types = []
 
     def get_object(self, objectId: str, offset=0, limit=100) -> Object:
         url = END_POINTS["getObject"].format(self.id, objectId)
@@ -22,10 +22,7 @@ class Space:
         response_data = response.json()
         obj = Object()
         for key, value in response_data.items():
-            if key == "blocks":
-                obj.__dict__[key] = value
-            else:
-                obj.__dict__[key] = value
+            obj.__dict__[key] = value
         return obj
 
     def get_objects(self, offset=0, limit=100) -> list[Object]:
@@ -44,7 +41,7 @@ class Space:
                 else:
                     new_item.__dict__[key] = value
             results.append(new_item)
-        self.all_types = results
+        self._all_types = results
         return results
 
     def get_types(self, offset=0, limit=100) -> list[Type]:
@@ -59,39 +56,18 @@ class Space:
             new_item._headers = self._headers
             new_item.space_id = self.id
             for key, value in data.items():
-                if key == "blocks":
-                    new_item.__dict__[key] = value
-                else:
-                    new_item.__dict__[key] = value
+                new_item.__dict__[key] = value
             results.append(new_item)
-        self.all_types = results
+        self._all_types = results
         return results
 
     def get_type(self, type_name: str) -> Type:
-        if len(self.all_types) == 0:
-            self.all_types = self.get_types()
-        for type in self.all_types:
+        if len(self._all_types) == 0:
+            self._all_types = self.get_types()
+        for type in self._all_types:
             if type.name == type_name:
                 return type
-        raise Exception("Type not found")
-
-    def get_templates(self, type: Type, offset=0, limit=100) -> list[Template]:
-        url = END_POINTS["getTemplates"].format(self.id, type.id)
-        params = {"offset": offset, "limit": limit}
-        response = requests.get(url, headers=self._headers, params=params)
-        response.raise_for_status()
-        response_data = response.json()
-        results = []
-        for data in response_data.get("data", []):
-            new_item = Template()
-            for key, value in data.items():
-                if key == "blocks":
-                    new_item.__dict__[key] = value
-                else:
-                    new_item.__dict__[key] = value
-            results.append(new_item)
-
-        return results
+        raise ValueError("Type not found")
 
     def search(self, query, offset=0, limit=10) -> list[Object]:
         if self.id == "":
