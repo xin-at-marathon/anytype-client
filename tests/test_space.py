@@ -1,27 +1,24 @@
 import pytest
 import os
 
-import anytype
-from anytype import Anytype
+from anytype import Anytype, Space, Template, Object, Relation, Block
 from pathlib import Path
 
 any = Anytype()
 any.auth()
 
 
-def get_apispace() -> anytype.Space:
+def test_create_space():
+    any.create_space("API")
+    assert get_apispace()
+
+
+def get_apispace() -> Space:
     spaces = any.get_spaces()
     for space in spaces:
         if space.name == "API":
             return space
     raise Exception("Space not found")
-
-
-def test_create_space():
-    space = get_apispace()
-    if not space:
-        any.create_space("API")
-    assert get_apispace()
 
 
 def test_get_spaces():
@@ -35,9 +32,17 @@ def test_get_spaces():
     assert found_space
 
 
+def test_missspaceid():
+    space = get_apispace()
+    print(space)
+    space.id = ""
+    with pytest.raises(ValueError):
+        space.search("bla bla bla")
+
+
 def test_template():
     # this is unsued yet, but just to keep testing
-    template = anytype.Template()
+    template = Template()
     print(template)
 
 
@@ -67,13 +72,13 @@ def test_get_types():
 
 def test_relation():
     # this is unsued yet, but just to keep testing
-    relation = anytype.Relation()
+    relation = Relation()
     print(relation)
 
 
 def test_block():
     # this is unsued yet, but just to keep testing
-    block = anytype.Block()
+    block = Block()
     print(block)
 
 
@@ -108,7 +113,7 @@ def test_createobj():
     if not space:
         raise Exception("Space not found")
 
-    obj = anytype.Object()
+    obj = Object()
     obj.name = "Hello World!"
     obj.icon = "🐍"
     obj.body = "`print('Hello World!')`"
@@ -127,9 +132,12 @@ def test_createobj():
     created_obj.add_title1("Test!")
     created_obj.add_title2("Test!")
     created_obj.add_title3("Test!")
+    created_obj.add_text("normal text")
     created_obj.add_codeblock("print('Hello World!')")
     created_obj.add_bullet("Hello World!")
     created_obj.add_checkbox("Hello World!")
+
+    space.search("Hello World")
 
 
 def test_exportobj():

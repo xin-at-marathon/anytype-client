@@ -71,7 +71,7 @@ class Space:
 
     def search(self, query, offset=0, limit=10) -> list[Object]:
         if self.id == "":
-            raise Exception("Space ID is required")
+            raise ValueError("Space ID is required")
         url = END_POINTS["search"].format(self.id)
         search_request = {
             "query": query,
@@ -88,10 +88,7 @@ class Space:
             new_item = Object()
             new_item._headers = self._headers
             for key, value in data.items():
-                if key == "blocks":
-                    new_item.__dict__[key] = value
-                else:
-                    new_item.__dict__[key] = value
+                new_item.__dict__[key] = value
             results.append(new_item)
 
         return results
@@ -121,11 +118,6 @@ class Space:
             results.append(new_item)
 
         return results
-
-    def delete(self) -> None:
-        url = END_POINTS["deleteSpace"].format(self.id)
-        response = requests.delete(url, headers=self._headers)
-        response.raise_for_status()
 
     def create_object(self, obj: Object, type: Type) -> Object:
         url = END_POINTS["createObject"].format(self.id)

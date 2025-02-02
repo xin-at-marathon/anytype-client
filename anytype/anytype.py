@@ -50,22 +50,16 @@ class Anytype:
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self.app_key}",
         }
-        try:
-            response = requests.get(url, headers=self._headers)
-            response.raise_for_status()
-            return True
-        except requests.exceptions.RequestException as e:
-            print(f"Token validation failed: {e}")
-            return False
+        response = requests.get(url, headers=self._headers)
+        response.raise_for_status()
+        return True
 
     def _get_userdata_folder(self) -> str:
         userdata = os.path.join(os.path.expanduser("~"), ".anytype")
         if not os.path.exists(userdata):
             os.makedirs(userdata)
-
         if os.name == "nt":
             os.system(f"attrib +h {userdata}")
-
         return userdata
 
     def get_spaces(self, offset=0, limit=10) -> list[Space]:
@@ -78,10 +72,7 @@ class Anytype:
             new_item = Space()
             new_item._headers = self._headers
             for key, value in data.items():
-                if key == "blocks":
-                    new_item.__dict__[key] = value
-                else:
-                    new_item.__dict__[key] = value
+                new_item.__dict__[key] = value
             results.append(new_item)
 
         return results
