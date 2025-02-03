@@ -15,7 +15,7 @@ class Anytype:
         self.app_key = ""
         self._headers = {}
 
-    def auth(self):
+    def auth(self) -> None:
         userdata = self._get_userdata_folder()
         anytoken = os.path.join(userdata, "any_token.json")
         if self.app_name == "":
