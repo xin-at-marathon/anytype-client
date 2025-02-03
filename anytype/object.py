@@ -40,6 +40,11 @@ class Object:
         if platform.system() == "Linux":
             print("Note that this will not work on Anytype for flatpak")
 
+    # ╭──────────────────────────────────────╮
+    # │ Hope that Anytype API make some way  │
+    # │ to create blocks, then this will be  │
+    # │           probably removed           │
+    # ╰──────────────────────────────────────╯
     def add_title1(self, text) -> None:
         self.body += f"# {text}\n"
 
