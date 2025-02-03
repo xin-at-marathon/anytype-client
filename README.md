@@ -71,6 +71,9 @@ print(f"Created object: {created_object.id}")
 | [📚 PDF Notes Importer](examples/import-pdf-notes.py) | Batch import annotated PDFs |
 | *More examples coming as Anytype API evolves* | [Request a feature](https://github.com/charlesneimog/anytype-client/issues) |
 
+## 📄 Documentation
+
+Check the [Wiki](https://github.com/charlesneimog/anytype-client/wiki)!
 
 ## 🤝 Contributing
 
