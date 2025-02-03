@@ -53,12 +53,10 @@ def test_search():
 
 
 def test_globalsearch():
-    space = get_apispace()
-    query = space.global_search("Isso não deve existir")
+    query = any.global_search("Isso não deve existir")
     print(query)
 
-    space = get_apispace()
-    query = space.global_search("Math")
+    query = any.global_search("Math")
     print(query)
 
 

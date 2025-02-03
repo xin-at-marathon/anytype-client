@@ -25,7 +25,7 @@ pip install git+https://github.com/charlesneimog/anytype-client
 
 ### Prerequisites:
 
-- Python 3.8+
+- Python 3.10+
 - Anytype desktop app (v0.44.13-beta or higher) running during authentication
 
 ## ⚡ Quick Start

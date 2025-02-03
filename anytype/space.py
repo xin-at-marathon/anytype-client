@@ -3,7 +3,6 @@ from copy import deepcopy
 
 from .type import Type
 from .object import Object
-from .template import Template
 from .config import END_POINTS
 
 
@@ -89,32 +88,6 @@ class Space:
             new_item._headers = self._headers
             for key, value in data.items():
                 new_item.__dict__[key] = value
-            results.append(new_item)
-
-        return results
-
-    def global_search(self, query, offset=0, limit=10) -> list[Object]:
-        url = END_POINTS["globalSearch"]
-        options = {"offset": offset, "limit": limit}
-        search_request = {
-            "query": query,
-        }
-        response = requests.post(
-            url, json=search_request, headers=self._headers, params=options
-        )
-        response.raise_for_status()
-
-        response_data = response.json()
-        results = []
-
-        for data in response_data.get("data", []):
-            new_item = Object()
-            new_item._headers = self._headers
-            for key, value in data.items():
-                if key == "blocks":
-                    new_item.__dict__[key] = value
-                else:
-                    new_item.__dict__[key] = value
             results.append(new_item)
 
         return results
