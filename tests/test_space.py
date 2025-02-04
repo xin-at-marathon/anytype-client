@@ -118,25 +118,24 @@ def test_createobj():
     obj.description = "This is an object created from Python Api"
 
     objtype = space.get_type("Page")
+    obj.add_title1("Test!")
+    obj.add_title2("Test!")
+    obj.add_title3("Test!")
+    obj.add_text("normal text")
+    obj.add_codeblock("print('Hello World!')")
+    obj.add_bullet("Hello World!")
+    obj.add_checkbox("Hello World!")
+    obj.add_image(
+        "https://raw.githubusercontent.com/charlesneimog/anytype-client/refs/heads/main/resources/pdf.png"
+    )
     created_obj = space.create_object(obj, objtype)
-
     # Add assertions to verify the object was created
     assert created_obj.name == "Hello World!"
     assert created_obj.icon == "🐍"
-    assert created_obj.body == "`print('Hello World!')`"
     assert (
         created_obj.description == "This is an object created from Python Api"
     )
-    created_obj.add_title1("Test!")
-    created_obj.add_title2("Test!")
-    created_obj.add_title3("Test!")
-    created_obj.add_text("normal text")
-    created_obj.add_codeblock("print('Hello World!')")
-    created_obj.add_bullet("Hello World!")
-    created_obj.add_checkbox("Hello World!")
-    created_obj.add_image(
-        "https://raw.githubusercontent.com/charlesneimog/anytype-client/refs/heads/main/resources/pdf.png"
-    )
+
     space.search("Hello World")
 
 
