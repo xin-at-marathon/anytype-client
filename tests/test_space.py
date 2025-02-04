@@ -126,7 +126,14 @@ def test_createobj():
     obj.add_bullet("Hello World!")
     obj.add_checkbox("Hello World!")
     obj.add_image(
-        "https://raw.githubusercontent.com/charlesneimog/anytype-client/refs/heads/main/resources/pdf.png"
+        "https://raw.githubusercontent.com/charlesneimog/"
+        + "anytype-client/refs/heads/main/resources/pdf.png"
+    )
+    obj.add_image(
+        "https://raw.githubusercontent.com/charlesneimog/"
+        + "anytype-client/refs/heads/main/resources/pdf.png",
+        alt="PDF",
+        title="PDF",
     )
     created_obj = space.create_object(obj, objtype)
     # Add assertions to verify the object was created
