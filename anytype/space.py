@@ -20,6 +20,7 @@ class Space:
         response.raise_for_status()
         response_data = response.json()
         obj = Object()
+        obj._headers = self._headers
         for key, value in response_data.items():
             obj.__dict__[key] = value
         return obj
@@ -35,10 +36,7 @@ class Space:
             new_item = Object()
             new_item._headers = self._headers
             for key, value in data.items():
-                if key == "blocks":
-                    new_item.__dict__[key] = value
-                else:
-                    new_item.__dict__[key] = value
+                new_item.__dict__[key] = value
             results.append(new_item)
         self._all_types = results
         return results

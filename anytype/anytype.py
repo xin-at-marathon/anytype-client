@@ -87,8 +87,8 @@ class Anytype:
         response.raise_for_status()
         data = response.json()
         new_space = Space()
+        new_space._headers = self._headers
         for key, value in data["space"].items():
-            new_space._headers = self._headers
             new_space.__dict__[key] = value
 
         return new_space
@@ -111,10 +111,7 @@ class Anytype:
             new_item = Object()
             new_item._headers = self._headers
             for key, value in data.items():
-                if key == "blocks":
-                    new_item.__dict__[key] = value
-                else:
-                    new_item.__dict__[key] = value
+                new_item.__dict__[key] = value
             results.append(new_item)
 
         return results

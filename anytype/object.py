@@ -5,6 +5,7 @@ import platform
 from .config import END_POINTS
 from .block import Block
 
+
 class Object:
     def __init__(self):
         self._headers: dict = {}
@@ -22,9 +23,6 @@ class Object:
         self.root_id: str = ""
         self.snippet: str = ""
         self.space_id: str = ""
-
-    def __repr__(self):
-        return f"<Object(name={self.name},type_id={self.type})>"
 
     def export(self, folder: str, format: str = "markdown") -> None:
         path = Path(folder)
@@ -70,3 +68,6 @@ class Object:
             self.body += f'![{alt}]({image_url} "{title}")\n'
         else:
             self.body += f"![{alt}]({image_url})\n"
+
+    def __repr__(self):
+        return f"<Object(name={self.name},type_id={self.type})>"
