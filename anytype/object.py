@@ -5,7 +5,6 @@ import platform
 from .config import END_POINTS
 from .block import Block
 
-
 class Object:
     def __init__(self):
         self._headers: dict = {}
@@ -65,3 +64,9 @@ class Object:
 
     def add_checkbox(self, text, checked=False) -> None:
         self.body += f"- [x] {text}\n" if checked else f"- [ ] {text}\n"
+
+    def add_image(self, image_url: str, alt: str = "", title: str = "") -> None:
+        if title:
+            self.body += f'![{alt}]({image_url} "{title}")\n'
+        else:
+            self.body += f"![{alt}]({image_url})\n"
