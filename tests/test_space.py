@@ -134,7 +134,9 @@ def test_createobj():
     created_obj.add_codeblock("print('Hello World!')")
     created_obj.add_bullet("Hello World!")
     created_obj.add_checkbox("Hello World!")
-
+    created_obj.add_image(
+        "https://raw.githubusercontent.com/charlesneimog/anytype-client/refs/heads/main/resources/pdf.png"
+    )
     space.search("Hello World")
 
 
