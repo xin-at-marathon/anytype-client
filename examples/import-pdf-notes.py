@@ -23,7 +23,7 @@ if not found:
 
 
 # After you are safe, add this to your main space (in my Anytype, my docs, and notes are the space[0])
-pdf_space = spaces[0]
+# pdf_space = spaces[0]
 
 all_notes = []
 pdf_file = input("Enter the path to the pdf file: ")
