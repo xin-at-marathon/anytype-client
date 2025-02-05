@@ -20,7 +20,7 @@ A Python client for interacting with [Anytype](https://anytype.io/). Automate wo
 ## 📦 Installation
 
 ```bash
-pip install git+https://github.com/charlesneimog/anytype-client
+pip install anytype-client
 ``` 
 
 ### Prerequisites:
