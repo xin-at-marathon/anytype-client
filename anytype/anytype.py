@@ -52,8 +52,10 @@ class Anytype:
             "Authorization": f"Bearer {self.app_key}",
         }
         response = requests.get(url, headers=self._headers)
-        response.raise_for_status()
-        return True
+        if response.status_code != 200:
+            return False
+        else:
+            return True
 
     def _get_userdata_folder(self) -> str:
         userdata = os.path.join(os.path.expanduser("~"), ".anytype")
