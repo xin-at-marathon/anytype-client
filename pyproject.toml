@@ -1,13 +1,14 @@
 [project]
 name = "anytype-client" 
-version = "0.0.1-alpha.8"
+version = "0.0.1-alpha.9"
 description = " An unnoficial Python Client for Anytype."
+readme = "README.md"
 
 [project.urls]
 "Source Code" = "https://github.com/charlesneimog/anytype-client" 
 
 [tool.setuptools]
-packages = ["anytype"]  
+packages = ["anytype"]
 
 [tool.black]
 line-length = 80
