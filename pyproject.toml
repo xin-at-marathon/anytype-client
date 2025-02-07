@@ -1,6 +1,6 @@
 [project]
 name = "anytype-client" 
-version = "0.0.1-alpha.10"
+version = "0.0.1-alpha.12"
 description = " An unnoficial Python Client for Anytype."
 readme = "README.md"
 authors = [
