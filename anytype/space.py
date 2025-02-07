@@ -3,6 +3,7 @@ from copy import deepcopy
 
 from .type import Type
 from .object import Object
+from .member import Member
 from .config import END_POINTS
 
 
@@ -56,6 +57,21 @@ class Space:
                 new_item.__dict__[key] = value
             results.append(new_item)
         self._all_types = results
+        return results
+
+    def get_members(self, offset: int = 0, limit: int = 100) -> list[Member]:
+        url = END_POINTS["getMembers"].format(self.id)
+        params = {"offset": offset, "limit": limit}
+        response = requests.get(url, headers=self._headers, params=params)
+        response.raise_for_status()
+        response_data = response.json()
+        results = []
+        for data in response_data.get("data", []):
+            new_item = Member()
+            new_item._headers = self._headers
+            for key, value in data.items():
+                new_item.__dict__[key] = value
+            results.append(new_item)
         return results
 
     def get_type(self, type_name: str) -> Type:

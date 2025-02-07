@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
   {name = "Charles K. Neimog", email = "charlesneimog@outlook.com"},
 ]
-license = "GPL-3.0"
+license = {text = "GPL-3.0-or-later"}
 
 [project.urls]
 "Source Code" = "https://github.com/charlesneimog/anytype-client" 

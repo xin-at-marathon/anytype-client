@@ -15,8 +15,8 @@ END_POINTS = {
     "getExport": "{}/spaces/{}/objects/{}/export/{}".format(
         API_CONFIG["apiUrl"], "{}", "{}", "{}"
     ),
-    "getMembers": "{}/spaces/{}/members{}".format(
-        API_CONFIG["apiUrl"], "{}", "{}"
+    "getMembers": "{}/spaces/{}/members".format(
+        API_CONFIG["apiUrl"], "{}", 
     ),
     "getObject": "{}/spaces/{}/objects/{}".format(
         API_CONFIG["apiUrl"], "{}", "{}"

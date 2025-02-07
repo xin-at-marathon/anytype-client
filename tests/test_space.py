@@ -146,6 +146,15 @@ def test_createobj():
     space.search("Hello World")
 
 
+def test_getmembers():
+    space = get_apispace()
+    if not space:
+        raise Exception("Space not found")
+    members = space.get_members()
+    print(members)
+    assert len(members) > 0
+
+
 def test_exportobj():
     space = get_apispace()
     if not space:
