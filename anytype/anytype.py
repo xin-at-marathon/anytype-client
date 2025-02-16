@@ -23,7 +23,8 @@ class Anytype:
             os.remove(anytoken)
 
         if self.app_name == "":
-            self.app_name = "Python API"
+            self.app_name = "python-anytype-client"
+
         if os.path.exists(anytoken):
             auth_json = json.load(open(anytoken))
             self.token = auth_json.get("session_token")
