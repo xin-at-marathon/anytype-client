@@ -5,6 +5,7 @@ from .type import Type
 from .object import Object
 from .member import Member
 from .config import END_POINTS
+from .error import ResponseHasError
 
 
 class Space:
@@ -18,7 +19,7 @@ class Space:
         url = END_POINTS["getObject"].format(self.id, objectId)
         params = {"offset": offset, "limit": limit}
         response = requests.get(url, headers=self._headers, params=params)
-        response.raise_for_status()
+        ResponseHasError(response)
         response_data = response.json()
         obj = Object()
         obj._headers = self._headers
@@ -30,7 +31,7 @@ class Space:
         url = END_POINTS["getObjects"].format(self.id)
         params = {"offset": offset, "limit": limit}
         response = requests.get(url, headers=self._headers, params=params)
-        response.raise_for_status()
+        ResponseHasError(response)
         response_data = response.json()
         results = []
         for data in response_data.get("data", []):
@@ -46,7 +47,7 @@ class Space:
         url = END_POINTS["getTypes"].format(self.id)
         params = {"offset": offset, "limit": limit}
         response = requests.get(url, headers=self._headers, params=params)
-        response.raise_for_status()
+        ResponseHasError(response)
         response_data = response.json()
         results = []
         for data in response_data.get("data", []):
@@ -63,7 +64,7 @@ class Space:
         url = END_POINTS["getMembers"].format(self.id)
         params = {"offset": offset, "limit": limit}
         response = requests.get(url, headers=self._headers, params=params)
-        response.raise_for_status()
+        ResponseHasError(response)
         response_data = response.json()
         results = []
         for data in response_data.get("data", []):
@@ -93,8 +94,7 @@ class Space:
         response = requests.post(
             url, json=search_request, headers=self._headers, params=options
         )
-        response.raise_for_status()
-
+        ResponseHasError(response)
         response_data = response.json()
         results = []
         for data in response_data.get("data", []):
@@ -122,7 +122,8 @@ class Space:
         obj_clone._headers = self._headers
         obj_clone.space_id = self.id
         response = requests.post(url, headers=self._headers, json=object_data)
-        response.raise_for_status()
+        ResponseHasError(response)
+
         for key, value in response.json()["object"].items():
             obj_clone.__dict__[key] = value
         return obj_clone

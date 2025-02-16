@@ -2,6 +2,7 @@ import requests
 
 from .config import END_POINTS
 from .template import Template
+from .error import ResponseHasError
 
 
 class Type:
@@ -22,7 +23,7 @@ class Type:
         url = END_POINTS["getTemplates"].format(self.space_id, self.id)
         params = {"offset": offset, "limit": limit}
         response = requests.get(url, headers=self._headers, params=params)
-        response.raise_for_status()
+        ResponseHasError(response)
         response_data = response.json()
         self._all_templates = []
         for data in response_data.get("data", []):

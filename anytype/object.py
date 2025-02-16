@@ -4,6 +4,7 @@ import platform
 
 from .config import END_POINTS
 from .block import Block
+from .error import ResponseHasError
 
 
 class Object:
@@ -33,7 +34,7 @@ class Object:
         url = END_POINTS["getExport"].format(self.space_id, self.id, format)
         payload = {"path": str(path)}
         response = requests.post(url, headers=self._headers, json=payload)
-        response.raise_for_status()
+        ResponseHasError(response)
         if platform.system() == "Linux":
             print("Note that this will not work on Anytype for flatpak")
 

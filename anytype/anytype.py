@@ -5,6 +5,7 @@ import json
 from .space import Space
 from .object import Object
 from .config import END_POINTS
+from .error import ResponseHasError
 
 
 class Anytype:
@@ -35,14 +36,14 @@ class Anytype:
         url = END_POINTS["displayCode"]
         payload = {"app_name": self.app_name}
         response = requests.post(url, params=payload)
-        response.raise_for_status()
+        ResponseHasError(response)
 
         api_four_digit_code = input("Enter the 4 digit code: ")
         challenge_id = response.json().get("challenge_id")
         url = END_POINTS["auth"]
         payload = {"challenge_id": challenge_id, "code": api_four_digit_code}
         response = requests.post(url, params=payload)
-        response.raise_for_status()
+        ResponseHasError(response)
 
         with open(anytoken, "w") as file:
             json.dump(response.json(), file, indent=4)
@@ -74,7 +75,7 @@ class Anytype:
         url = END_POINTS["getSpaces"]
         params = {"offset": offset, "limit": limit}
         response = requests.get(url, headers=self._headers, params=params)
-        response.raise_for_status()
+        ResponseHasError(response)
         results = []
         for data in response.json().get("data", []):
             new_item = Space()
@@ -91,7 +92,7 @@ class Anytype:
             "name": name,
         }
         response = requests.post(url, headers=self._headers, json=object_data)
-        response.raise_for_status()
+        ResponseHasError(response)
         data = response.json()
         new_space = Space()
         new_space._headers = self._headers
@@ -109,7 +110,7 @@ class Anytype:
         response = requests.post(
             url, json=search_request, headers=self._headers, params=options
         )
-        response.raise_for_status()
+        ResponseHasError(response)
 
         response_data = response.json()
         results = []
