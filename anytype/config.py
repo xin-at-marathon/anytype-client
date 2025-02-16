@@ -16,15 +16,14 @@ END_POINTS = {
         API_CONFIG["apiUrl"], "{}", "{}", "{}"
     ),
     "getMembers": "{}/spaces/{}/members".format(
-        API_CONFIG["apiUrl"], "{}", 
-    ),
-    "getObject": "{}/spaces/{}/objects/{}".format(
-        API_CONFIG["apiUrl"], "{}", "{}"
-    ),
-    "getObjects": "{}/spaces/{}/objects".format(
         API_CONFIG["apiUrl"],
         "{}",
     ),
+    "getObject": "{}/spaces/{}/objects/".format(
+        API_CONFIG["apiUrl"],
+        "{}",
+    ),
+    "getObjects": "{}/spaces/{}/objects".format(API_CONFIG["apiUrl"], "{}"),
     "getSpaces": "{}/spaces".format(API_CONFIG["apiUrl"]),
     "getTemplates": "{}/spaces/{}/types/{}/templates".format(
         API_CONFIG["apiUrl"],
