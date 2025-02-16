@@ -15,9 +15,13 @@ class Anytype:
         self.app_key = ""
         self._headers = {}
 
-    def auth(self) -> None:
+    def auth(self, force=False) -> None:
         userdata = self._get_userdata_folder()
         anytoken = os.path.join(userdata, "any_token.json")
+
+        if force and os.path.exists(anytoken):
+            os.remove(anytoken)
+
         if self.app_name == "":
             self.app_name = "Python API"
         if os.path.exists(anytoken):
