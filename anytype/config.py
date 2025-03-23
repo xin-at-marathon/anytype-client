@@ -19,9 +19,10 @@ END_POINTS = {
         API_CONFIG["apiUrl"],
         "{}",
     ),
-    "getObject": "{}/spaces/{}/objects/".format(
+    "getObject": "{}/spaces/{}/objects/{}".format(
         API_CONFIG["apiUrl"],
         "{}",
+        "{}"
     ),
     "getObjects": "{}/spaces/{}/objects".format(API_CONFIG["apiUrl"], "{}"),
     "getSpaces": "{}/spaces".format(API_CONFIG["apiUrl"]),

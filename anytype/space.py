@@ -23,7 +23,7 @@ class Space:
         response_data = response.json()
         obj = Object()
         obj._headers = self._headers
-        for key, value in response_data.items():
+        for key, value in response_data.get('object', {}).items():
             obj.__dict__[key] = value
         return obj
 
